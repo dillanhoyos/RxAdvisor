@@ -5,9 +5,10 @@ from google.auth import credentials
 from google.oauth2 import service_account
 import openai
 import vertexai
-from vertexai.preview.language_models import ChatModel
+from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 
-from utils import get_examples
+from utils import update_context
+
 
 import json
 
@@ -15,6 +16,7 @@ app = Flask(__name__)
 
 examples_file = '/home/karthi/work/vertexAI/RxAdvisor/message.json'
 examples = []
+context = 'You are a highly skilled health consultant, equipped with extensive knowledge of remedies and medicine names. Your task is to assist users by providing them with appropriate medical recommendations based on their symptoms. As a responsible consultant, you maintain a comprehensive understanding of the various drugs available in the market, their applications, and potential side effects. With your expertise, you aim to offer reliable advice and promote the well-being of those seeking assistance. Remember to provide accurate and relevant information, considering the unique needs and conditions of each individual.'
 
 @app.route("/")
 def index():
@@ -35,8 +37,7 @@ conversation = [
 
 def get_Vertex_response(case):
     chat_model = ChatModel.from_pretrained("chat-bison@001")
-    examples = get_examples(examples_file)
-
+    global context
     parameters = {
         "temperature": 0.2,
         "max_output_tokens": 256,
@@ -44,11 +45,17 @@ def get_Vertex_response(case):
         "top_k": 40
     }
     chat = chat_model.start_chat(
-    context="""you provide medical remedies and medicine names to users based on their symptoms.""",
-    examples=examples
+    context= context,
+    examples=[            
+            InputOutputTextPair(
+                input_text="I having excess body fat, shortness of breath, sweating more than usual and snoring",
+                output_text="Disease: Obesity \n\n Diagnosis:The most common way to determine if a person is affected by overweight or obesity is to calculate BMI, which is an estimate of body fat that compares a persons weight to their height.\n\n Medicine: Lorcaserin, Bontril Slow Release, Bupropion \n\n Treatment: Common treatments for overweight and obesity include losing weight through healthy eating, being more physically active, and making other changes to your usual habits. Weight-management programs may help some people lose weight or keep from regaining lost weight."
+            )
+        ]
     )
     response = chat.send_message(case, **parameters)
     chat.message_history.append(case)
+    context = update_context(case, context)
     return response.text
 
 def get_Chat_response(case):
