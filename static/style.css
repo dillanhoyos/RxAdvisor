@@ -16,7 +16,7 @@ body, html {
 	margin-bottom: auto;
 }
 .card{
-	height: 1000px;
+	height: 700px;
 	border-radius: 15px !important;
 	background-color: rgba(0,0,0,0.4) !important;
 }
@@ -159,6 +159,7 @@ border-radius: 0 0 15px 15px !important;
 	padding: 10px;
 	position: relative;
 }
+
 .msg_cotainer_send{
 	margin-top: auto;
 	margin-bottom: auto;
@@ -236,3 +237,100 @@ z-index: 1;
 	margin-bottom: 15px !important;
 }
 }
+/* Set the height of the parallax container */
+.parallax-container {
+	height: 92vh;
+	overflow-x: hidden;
+	overflow-y: auto;
+	perspective: 1px;
+	perspective-origin: 0 0;
+  }
+  
+  /* Create the parallax scrolling effect */
+  .parallax-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	transform-style: preserve-3d;
+  }
+  
+  /* Set the background image and parallax effect */
+  .parallax-bg:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: center;
+	transform-origin: 0 0;
+	transform: translateZ(-1px) scale(2);
+	z-index: -1;
+  }
+  
+  .parallax-section.scrolled {
+	/* Set the new gradient background when scrolled */
+	background: linear-gradient(to right, rgb(59, 34, 50), rgb(54, 60, 70), rgb(32, 32, 43));
+	background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 67, 70), rgb(32, 32, 43));
+  }
+  
+  /* Center the content */
+  .content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 100vh;
+	color: white;
+	text-align: center;
+	font-size: 24px;
+	padding: 40px; /* Add padding to the content */
+  }
+  
+  /* Styling for the description paragraph */
+  .description {
+	margin: 20px;
+  }
+  
+  /* Styling for the pointing elements */
+  .pointing {
+	margin-top: 20px;
+	color: white;
+	font-size: 16px;
+	animation: bounce 2s infinite;
+  }
+  
+  /* Animation for the pointing elements */
+  @keyframes bounce {
+	0% {
+	  transform: translateY(0);
+	}
+	50% {
+	  transform: translateY(-30px);
+	}
+	100% {
+	  transform: translateY(0);
+	}
+  }
+  .title-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	text-align: center;
+	color: white;
+  }
+  
+  .title {
+	font-size: 48px;
+	font-weight: bold;
+	margin-bottom: 20px;
+  }
+  
+  .subtitle {
+	font-size: 24px;
+  }
